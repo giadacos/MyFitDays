@@ -18,6 +18,9 @@
             android:name=".LocationActivity"
             android:exported="false" />
         <activity
+            android:name=".CountPActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
