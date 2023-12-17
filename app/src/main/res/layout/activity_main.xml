@@ -6,31 +6,89 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/location"
-        android:layout_width="148dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="120dp"
-        android:text="Where am I?"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="MyFitDays"
+        android:textColor="#FF6600"
+        android:textColorHighlight="#F40F0F"
+        android:textColorHint="#EA1010"
+        android:textColorLink="#DA0F0F"
+        android:textSize="48sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/ContaPassi"
-        android:layout_width="146dp"
-        android:layout_height="72dp"
-        android:layout_marginTop="235dp"
-        android:text="ContaPassi"
+        android:id="@+id/storico"
+        android:layout_width="209dp"
+        android:layout_height="82dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="#020202"
+        android:text="Storico passi"
+        android:textColor="#FF6600"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kcal"
+        app:layout_constraintVertical_bias="0.081" />
+
+    <Button
+        android:id="@+id/info"
+        android:layout_width="209dp"
+        android:layout_height="82dp"
+        android:layout_marginTop="148dp"
+        android:backgroundTint="#FF6600"
+        android:text="MyFitInfo"
+        android:textColor="#FBFBFB"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
+    <Button
+        android:id="@+id/kcal"
+        android:layout_width="209dp"
+        android:layout_height="82dp"
+        android:layout_marginTop="428dp"
+        android:backgroundTint="#FF6600"
+        android:text="Calorie giornaliere"
+        android:textColor="#020202"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/location"
+        android:layout_width="209dp"
+        android:layout_height="82dp"
+        android:layout_marginTop="268dp"
+        android:backgroundTint="#FF6600"
+        android:text="Where am I?"
+        android:textColor="#020202"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/contapassi"
+        android:layout_width="209dp"
+        android:layout_height="82dp"
+        android:layout_marginTop="348dp"
+        android:backgroundTint="#FF6600"
+        android:text="Contapassi"
+        android:textColor="#020202"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
