@@ -1,6 +1,7 @@
 package com.example.myfitdays
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Geocoder
@@ -17,6 +18,7 @@ import java.io.IOException
 import java.util.Locale
 
 
+@Suppress("DEPRECATION")
 class LocationActivity : AppCompatActivity(), LocationListener {
     private lateinit var locationManager: LocationManager
     private val locationPermissionCodeFINE = 2 //viene utilizzato come identificatore univoco per una particolare richiesta. Usato in onRequestPermissionsResult
@@ -47,6 +49,7 @@ class LocationActivity : AppCompatActivity(), LocationListener {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onLocationChanged(location: Location) {
         val tvGpsLocation = findViewById<TextView>(R.id.location)
         val geocoder = Geocoder(this, Locale.getDefault())
@@ -55,7 +58,7 @@ class LocationActivity : AppCompatActivity(), LocationListener {
             //il metodo non deprecato richiede per forza l'API TIRAMISU ed un geocodeListener
             val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
             if (addresses != null && addresses.size > 0) {
-                indirizzo = addresses[0].getAddressLine(0);
+                indirizzo = addresses[0].getAddressLine(0)
             }
         } catch (e: IOException) {
             e.printStackTrace()
