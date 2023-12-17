@@ -60,7 +60,7 @@ class LocationActivity : AppCompatActivity(), LocationListener {
         } catch (e: IOException) {
             e.printStackTrace()
         }
-        tvGpsLocation.text = "Posizione: ${indirizzo}\nLe tue coordinate sono:\nLatitudine: ${location.latitude}, Longitudine: ${location.longitude}"
+        tvGpsLocation.text = "${indirizzo}\nLe tue coordinate sono:\nLatitudine: ${location.latitude},\nLongitudine: ${location.longitude}"
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
