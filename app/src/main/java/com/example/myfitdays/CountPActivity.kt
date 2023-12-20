@@ -15,6 +15,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 import kotlin.math.pow
+import kotlin.math.sqrt
 
 class CountPActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
@@ -26,7 +27,7 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
     private var midnightResetHandler: Handler? = null
     private lateinit var periodicResetHandler: Handler
     private val CHECK_INTERVAL = 60000
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_countp)
@@ -38,7 +39,7 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
 
         // Recupera il conteggio dei passi salvato o impostalo a 0 se non presente
         stepCount = sharedPreferences.getInt(STEPS_KEY, 0)
-        stepCountTextView.text = "Steps taken: $stepCount"
+        stepCountTextView.text = "Passi compiuti: $stepCount"
 
         // Reset del conteggio se è mezzanotte in punto
         resetStepCountAtMidnightOrNewDay()
@@ -81,6 +82,7 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun resetStepCount() {
         stepCount = 0
         stepCountTextView.text = "Steps taken: $stepCount"
@@ -110,10 +112,11 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
         return midnight - currentTime
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onSensorChanged(event: SensorEvent?) {
         if (event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
             val acceleration = event.values
-            val magnitude = Math.sqrt(
+            val magnitude = sqrt(
                 acceleration[0].toDouble().pow(2.0) +
                         acceleration[1].toDouble().pow(2.0) +
                         acceleration[2].toDouble().pow(2.0)
@@ -134,8 +137,8 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
         // Rimuove il callback per azzerare i passi se è mezzanotte durante il pause
         midnightResetHandler?.removeCallbacksAndMessages(null)
     }
-    override fun onDestroy() {
+   /* override fun onDestroy() {
         super.onDestroy()
         //sensorManager.unregisterListener(this)
-    }
+    }*/
 }
