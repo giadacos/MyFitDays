@@ -15,4 +15,5 @@
     <string name="calorie_giornaliere">Calorie giornaliere</string>
     <string name="where_am_i">Where am I?</string>
     <string name="contapassi">Contapassi</string>
+    <string name="steps_taken_0">Steps taken: 0</string>
 </resources>

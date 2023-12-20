@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFC107"
+    android:background="#FA842B"
     android:backgroundTint="#FA842B"
     tools:context=".InfoActivity">
 
@@ -52,10 +52,10 @@
                 android:layout_height="50dp"
                 android:backgroundTint="#FBF6F6"
                 android:ems="10"
+                android:importantForAutofill="no"
                 android:inputType="text|textPersonName"
                 android:textSize="20sp"
-                tools:ignore="LabelFor,SpeakableTextPresentCheck"
-                android:importantForAutofill="no" />
+                tools:ignore="LabelFor,SpeakableTextPresentCheck" />
 
         </LinearLayout>
 
@@ -80,10 +80,10 @@
                 android:layout_height="50dp"
                 android:backgroundTint="#FBF6F6"
                 android:ems="10"
+                android:importantForAutofill="no"
                 android:inputType="text|textPersonName"
                 android:textSize="20sp"
-                tools:ignore="LabelFor,SpeakableTextPresentCheck"
-                android:importantForAutofill="no" />
+                tools:ignore="LabelFor,SpeakableTextPresentCheck" />
 
         </LinearLayout>
 
@@ -99,8 +99,7 @@
                 android:layout_weight="1"
                 android:text="@string/sesso_f_m_a"
                 android:textColor="#070707"
-                android:textSize="20sp"
-                 />
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/sesso"
@@ -108,10 +107,10 @@
                 android:layout_height="match_parent"
                 android:backgroundTint="#FBF6F6"
                 android:ems="10"
+                android:importantForAutofill="no"
                 android:inputType="text"
                 android:textSize="20sp"
-                tools:ignore="LabelFor,SpeakableTextPresentCheck"
-                android:importantForAutofill="no" />
+                tools:ignore="LabelFor,SpeakableTextPresentCheck" />
         </LinearLayout>
 
         <LinearLayout
@@ -134,10 +133,10 @@
                 android:layout_height="50dp"
                 android:backgroundTint="#F3EEEE"
                 android:ems="10"
+                android:importantForAutofill="no"
                 android:inputType="datetime|date"
                 android:textSize="20sp"
-                tools:ignore="LabelFor,SpeakableTextPresentCheck"
-                android:importantForAutofill="no" />
+                tools:ignore="LabelFor,SpeakableTextPresentCheck" />
         </LinearLayout>
 
         <LinearLayout
@@ -160,10 +159,10 @@
                 android:layout_height="50dp"
                 android:backgroundTint="#F3EEEE"
                 android:ems="10"
+                android:importantForAutofill="no"
                 android:inputType="number|numberDecimal"
                 android:textSize="20sp"
-                tools:ignore="LabelFor,SpeakableTextPresentCheck"
-                android:importantForAutofill="no" />
+                tools:ignore="LabelFor,SpeakableTextPresentCheck" />
         </LinearLayout>
 
         <LinearLayout
@@ -186,10 +185,10 @@
                 android:layout_height="50dp"
                 android:backgroundTint="#F3EEEE"
                 android:ems="10"
+                android:importantForAutofill="no"
                 android:inputType="number"
                 android:textSize="20sp"
-                tools:ignore="LabelFor,SpeakableTextPresentCheck"
-                android:importantForAutofill="no" />
+                tools:ignore="LabelFor,SpeakableTextPresentCheck" />
         </LinearLayout>
 
         <LinearLayout
@@ -212,10 +211,10 @@
                 android:layout_height="50dp"
                 android:backgroundTint="#F3EEEE"
                 android:ems="10"
+                android:importantForAutofill="no"
                 android:inputType="text"
                 android:textSize="20sp"
-                tools:ignore="LabelFor,SpeakableTextPresentCheck"
-                android:importantForAutofill="no" />
+                tools:ignore="LabelFor,SpeakableTextPresentCheck" />
         </LinearLayout>
 
     </LinearLayout>
