@@ -42,4 +42,21 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
 
+    <Button
+        android:id="@+id/btnOpenMap"
+        android:layout_width="174dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="128dp"
+        android:backgroundTint="#0C0C0C"
+        android:onClick="openMap"
+        android:text="Apri Mappa"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/location"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="HardcodedText" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,12 +3,15 @@ package com.example.myfitdays
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +26,8 @@ class LocationActivity : AppCompatActivity(), LocationListener {
     private lateinit var locationManager: LocationManager
     private val locationPermissionCodeFINE = 2 //viene utilizzato come identificatore univoco per una particolare richiesta. Usato in onRequestPermissionsResult
     private val locationPermissionCodeCOARSE = 3
+    private var latitudine: Double = 0.0
+    private var longitudine: Double = 0.0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_location)
@@ -55,15 +60,17 @@ class LocationActivity : AppCompatActivity(), LocationListener {
         val geocoder = Geocoder(this, Locale.getDefault())
         lateinit var indirizzo: String
         try {
+            latitudine = location.latitude
+            longitudine = location.longitude
             //il metodo non deprecato richiede per forza l'API TIRAMISU ed un geocodeListener
-            val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+            val addresses = geocoder.getFromLocation(latitudine, longitudine, 1)
             if (addresses != null && addresses.size > 0) {
                 indirizzo = addresses[0].getAddressLine(0)
             }
         } catch (e: IOException) {
             e.printStackTrace()
         }
-        tvGpsLocation.text = "${indirizzo}\nLe tue coordinate sono:\nLatitudine: ${location.latitude},\nLongitudine: ${location.longitude}"
+        tvGpsLocation.text = "${indirizzo}\nLe tue coordinate sono:\nLatitudine: %.5f,\nLongitudine: %.5f".format(latitudine, longitudine)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -76,6 +83,20 @@ class LocationActivity : AppCompatActivity(), LocationListener {
             }
         }
     }
+
+    fun openMap(view: View) {
+        val gmmIntentUri = Uri.parse("geo:$latitudine,$longitudine?q=$latitudine,$longitudine")
+        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+        mapIntent.setPackage("com.google.android.apps.maps")
+        mapIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+
+        if (mapIntent.resolveActivity(packageManager) != null) {
+            startActivity(mapIntent)
+        } else {
+            Toast.makeText(this, "Applicazione delle mappe non trovata", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()
