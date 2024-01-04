@@ -5,7 +5,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import com.example.myfitdays.R.id.contapassi
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
@@ -17,7 +16,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, LocationActivity::class.java)
             startActivity(intent)
         }
-        val countPActivity = findViewById<Button>(contapassi)
+        val countPActivity = findViewById<Button>(R.id.contapassi)
         countPActivity.setOnClickListener{
             val intent2 = Intent(this, CountPActivity::class.java)
             startActivity(intent2)
