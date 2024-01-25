@@ -27,14 +27,6 @@
             android:textSize="24sp"
             tools:ignore="HardcodedText" />
 
-        <Button
-            android:id="@+id/historyButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="127dp"
-            android:text="" />
-
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
