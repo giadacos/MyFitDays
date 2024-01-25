@@ -121,7 +121,7 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
                         acceleration[1].toDouble().pow(2.0) +
                         acceleration[2].toDouble().pow(2.0)
             )
-            if (magnitude > 10) {
+            if (magnitude > 13) {
                 stepCount++
                 stepCountTextView.text = "Steps taken: $stepCount"
                 // Salva il conteggio aggiornato in SharedPreferences
