@@ -3,6 +3,7 @@ package com.example.myfitdays
 //package com.example.passsssssi
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -11,8 +12,10 @@ import android.hardware.SensorManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myfitdays.database.MyDatabaseHelper
 import java.util.*
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -23,10 +26,11 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var stepCountTextView: TextView
     private lateinit var sharedPreferences: SharedPreferences
     private var accelerometer: Sensor? = null
-    private val STEPS_KEY = "steps_count"
+    private lateinit var databaseHelper: MyDatabaseHelper
+    private val STEPSKEY = "steps_count"
     private var midnightResetHandler: Handler? = null
     private lateinit var periodicResetHandler: Handler
-    private val CHECK_INTERVAL = 60000
+    private val CHECKINTERVAL = 60000
     @SuppressLint("MissingInflatedId", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +40,10 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
         stepCountTextView = findViewById(R.id.step_count_text_view)
         sharedPreferences = getSharedPreferences("MyFitDaysPrefs", Context.MODE_PRIVATE)
+        databaseHelper = MyDatabaseHelper(this)
 
         // Recupera il conteggio dei passi salvato o impostalo a 0 se non presente
-        stepCount = sharedPreferences.getInt(STEPS_KEY, 0)
+        stepCount = sharedPreferences.getInt(STEPSKEY, 0)
         stepCountTextView.text = "Passi compiuti: $stepCount"
 
         // Reset del conteggio se è mezzanotte in punto
@@ -46,7 +51,12 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
         periodicResetHandler = Handler(Looper.getMainLooper())
         periodicResetHandler.postDelayed({
             checkForMidnightOrNewDay()
-        }, CHECK_INTERVAL.toLong())
+        }, CHECKINTERVAL.toLong())
+        val historyButton = findViewById<Button>(R.id.historyButton)
+        historyButton.setOnClickListener {
+            val intent = Intent(this, HistoryActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun checkForMidnightOrNewDay() {
@@ -55,7 +65,7 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
         // Richiama il controllo periodicamente
         periodicResetHandler.postDelayed({
             checkForMidnightOrNewDay()
-        }, CHECK_INTERVAL.toLong())
+        }, CHECKINTERVAL.toLong())
     }
 
     private fun resetStepCountAtMidnightOrNewDay() {
@@ -74,6 +84,11 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
             } else {
                 // Calcola il tempo fino a mezzanotte e imposta un handler per azzerare i passi
                 val midnightResetTime = calculateTimeUntilMidnight()
+
+                // Aggiornamento del conteggio poco prima della mezzanotte
+                if (midnightResetTime <= CHECKINTERVAL) {
+                    databaseHelper.addStepEntry(stepCount)
+                }
                 midnightResetHandler = Handler(Looper.getMainLooper())
                 midnightResetHandler?.postDelayed({
                     resetStepCountAtMidnightOrNewDay()
@@ -86,7 +101,7 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
     private fun resetStepCount() {
         stepCount = 0
         stepCountTextView.text = "Steps taken: $stepCount"
-        sharedPreferences.edit().putInt(STEPS_KEY, stepCount).apply()
+        sharedPreferences.edit().putInt(STEPSKEY, stepCount).apply()
 
         // Salva il giorno corrente per il controllo del nuovo giorno
         val calendar = Calendar.getInstance()
@@ -125,7 +140,7 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
                 stepCount++
                 stepCountTextView.text = "Steps taken: $stepCount"
                 // Salva il conteggio aggiornato in SharedPreferences
-                sharedPreferences.edit().putInt(STEPS_KEY, stepCount).apply()
+                sharedPreferences.edit().putInt(STEPSKEY, stepCount).apply()
             }
         }
     }
