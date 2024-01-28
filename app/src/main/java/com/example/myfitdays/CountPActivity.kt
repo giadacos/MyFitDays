@@ -36,11 +36,11 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
         stepCountTextView = findViewById(R.id.step_count_text_view)
         sharedPreferences = getSharedPreferences("MyFitDaysPrefs", Context.MODE_PRIVATE)
 
-        // Recupera il conteggio dei passi salvato o impostalo a 0 se non presente
+        //Recupera il conteggio dei passi salvato o impostalo a 0 se non presente
         stepCount = sharedPreferences.getInt(STEPSKEY, 0)
         stepCountTextView.text = "Passi compiuti: $stepCount"
 
-        // Reset del conteggio se è mezzanotte in punto
+        //Reset del conteggio se è mezzanotte in punto
         resetStepCountAtMidnightOrNewDay()
         periodicResetHandler = Handler(Looper.getMainLooper())
         periodicResetHandler.postDelayed({
@@ -52,7 +52,7 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
     private fun checkForMidnightOrNewDay() {
         resetStepCountAtMidnightOrNewDay()
 
-        // Richiama il controllo periodicamente
+        //Richiama il controllo periodicamente
         periodicResetHandler.postDelayed({
             checkForMidnightOrNewDay()
         }, CHECKINTERVAL.toLong())
@@ -65,17 +65,17 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
         val currentSeconds = calendar.get(Calendar.SECOND)
         val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
 
-        if (currentHour == 0 && currentMinute == 0 && currentSeconds == 0) { // Mezzanotte
+        if (currentHour == 0 && currentMinute == 0 && currentSeconds == 0) { // Mezzanotte in punto
             resetStepCount()
         } else {
             val lastSavedDay = sharedPreferences.getInt("LAST_SAVED_DAY", -1)
-            if (currentDay != lastSavedDay) { // Nuovo giorno
+            if (currentDay != lastSavedDay) { // se è un nuovo giorno
                 resetStepCount()
             } else {
                 // Calcola il tempo fino a mezzanotte e imposta un handler per azzerare i passi
                 val midnightResetTime = calculateTimeUntilMidnight()
 
-                // Aggiornamento del conteggio poco prima della mezzanotte
+                //Aggiornamento del conteggio poco prima della mezzanotte
 
                 midnightResetHandler = Handler(Looper.getMainLooper())
                 midnightResetHandler?.postDelayed({
@@ -95,6 +95,7 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
         val calendar = Calendar.getInstance()
         val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
         sharedPreferences.edit().putInt("LAST_SAVED_DAY", currentDay).apply()
+        //salvo il giorno corrente ricordarmi quale sia
     }
 
     override fun onResume() {
@@ -105,14 +106,14 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
 
 
     private fun calculateTimeUntilMidnight(): Long {
-        val calendar = Calendar.getInstance()
+        val calendar = Calendar.getInstance() //istanza del giorno corrente
         val currentTime = calendar.timeInMillis
         calendar.add(Calendar.DAY_OF_YEAR, 1)
         calendar.set(Calendar.HOUR_OF_DAY, 0)
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)
         val midnight = calendar.timeInMillis
-        return midnight - currentTime
+        return midnight - currentTime //tempo corrente - mezzanotte
     }
 
     @SuppressLint("SetTextI18n")
@@ -124,7 +125,7 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
                         acceleration[1].toDouble().pow(2.0) +
                         acceleration[2].toDouble().pow(2.0)
             )
-            if (magnitude > 13) {
+            if (magnitude > 22) { //valore che permette un conteggio reale più o meno accurato
                 stepCount++
                 stepCountTextView.text = "Steps taken: $stepCount"
                 // Salva il conteggio aggiornato in SharedPreferences
@@ -134,14 +135,11 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+    //metodo obbligatiorio da implementare anche se non utilizzato
 
     override fun onPause() {
         super.onPause()
         // Rimuove il callback per azzerare i passi se è mezzanotte durante il pause
         midnightResetHandler?.removeCallbacksAndMessages(null)
     }
-    /*override fun onDestroy() {
-        super.onDestroy()
-        //sensorManager.unregisterListener(this)
-    }*/
 }

@@ -49,7 +49,7 @@ class LocationActivity : AppCompatActivity(), LocationListener {
         try {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5f, this)
         } catch (e: SecurityException) {
-            // Può essere lanciata una SecurityException se il permesso viene revocato
+            //Può essere lanciata una SecurityException se il permesso viene revocato
             e.printStackTrace()
         }
     }
@@ -75,7 +75,7 @@ class LocationActivity : AppCompatActivity(), LocationListener {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 2 || requestCode == 3) {
+        if (requestCode == 2 || requestCode == 3) { //devono avere entrambi i permessi
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 requestLocationUpdates()
             } else {
@@ -91,12 +91,16 @@ class LocationActivity : AppCompatActivity(), LocationListener {
         mapIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
 
         if (mapIntent.resolveActivity(packageManager) != null) {
-            startActivity(mapIntent)
+            startActivity(mapIntent) //si controlla se è presente l'app
         } else {
             Toast.makeText(this, "Applicazione delle mappe non trovata", Toast.LENGTH_SHORT).show()
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        locationManager.removeUpdates(this)
+    }
 
     override fun onDestroy() {
         super.onDestroy()
