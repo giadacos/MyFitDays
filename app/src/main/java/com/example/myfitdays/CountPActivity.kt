@@ -100,7 +100,7 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
 
     override fun onResume() {
         super.onResume()
-        // Ripristina il conteggio se è mezzanotte in punto o se è un nuovo giorno al momento del resume
+        // Ripristina il conteggio o lo azzera se è mezzanotte in punto o se è un nuovo giorno al momento del resume
         resetStepCountAtMidnightOrNewDay()
     }
 
@@ -125,7 +125,7 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
                         acceleration[1].toDouble().pow(2.0) +
                         acceleration[2].toDouble().pow(2.0)
             )
-            if (magnitude > 22) { //valore che permette un conteggio reale più o meno accurato
+            if (magnitude > 12) { //valore che permette un conteggio reale più o meno accurato
                 stepCount++
                 stepCountTextView.text = "Steps taken: $stepCount"
                 // Salva il conteggio aggiornato in SharedPreferences
@@ -135,11 +135,18 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
-    //metodo obbligatiorio da implementare anche se non utilizzato
+    //metodo obbligatiorio da sovrascrivere anche se non implementato
 
     override fun onPause() {
         super.onPause()
-        // Rimuove il callback per azzerare i passi se è mezzanotte durante il pause
+        midnightResetHandler?.removeCallbacksAndMessages(null)
+        /*La chiamata al metodo rimuove tutti i messaggi e i callback associati a midnightResetHandler,
+        garantendo che non vengano più eseguite azioni relative all'azzeramento del conteggio
+        dei passi quando l'Activity è in pausa.*/
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
         midnightResetHandler?.removeCallbacksAndMessages(null)
     }
 }

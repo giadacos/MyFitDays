@@ -24,7 +24,8 @@ import java.util.Locale
 @Suppress("DEPRECATION")
 class LocationActivity : AppCompatActivity(), LocationListener {
     private lateinit var locationManager: LocationManager
-    private val locationPermissionCodeFINE = 2 //viene utilizzato come identificatore univoco per una particolare richiesta. Usato in onRequestPermissionsResult
+    private val locationPermissionCodeFINE = 2
+    //viene utilizzato come identificatore univoco per una particolare richiesta. Usato in onRequestPermissionsResult
     private val locationPermissionCodeCOARSE = 3
     private var latitudine: Double = 0.0
     private var longitudine: Double = 0.0
@@ -36,9 +37,8 @@ class LocationActivity : AppCompatActivity(), LocationListener {
     }
 
     private fun getLocation() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCodeFINE)
-        }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), locationPermissionCodeCOARSE)
        else
@@ -79,7 +79,7 @@ class LocationActivity : AppCompatActivity(), LocationListener {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 requestLocationUpdates()
             } else {
-                Toast.makeText(this, "Permission denied", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "non ci sono i permessi necessari!", Toast.LENGTH_LONG).show()
             }
         }
     }
