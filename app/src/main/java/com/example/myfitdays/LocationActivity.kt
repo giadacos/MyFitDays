@@ -75,7 +75,7 @@ class LocationActivity : AppCompatActivity(), LocationListener {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 2 || requestCode == 3) { //devono avere entrambi i permessi
+        if (requestCode == locationPermissionCodeFINE || requestCode == locationPermissionCodeCOARSE ) { //devono avere entrambi i permessi
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 requestLocationUpdates()
             } else {
