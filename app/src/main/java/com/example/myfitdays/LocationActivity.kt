@@ -36,6 +36,11 @@ class LocationActivity : AppCompatActivity(), LocationListener {
         getLocation()
     }
 
+    override fun onResume() {
+        super.onResume()
+        getLocation()
+    }
+
     private fun getLocation() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCodeFINE)
