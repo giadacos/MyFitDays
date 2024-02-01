@@ -52,7 +52,8 @@ class LocationActivity : AppCompatActivity(), LocationListener {
 
     private fun requestLocationUpdates() {
         try {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5f, this)
+            val provider = if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) LocationManager.GPS_PROVIDER else LocationManager.NETWORK_PROVIDER
+            locationManager.requestLocationUpdates(provider, 5000, 5f, this)
         } catch (e: SecurityException) {
             //Può essere lanciata una SecurityException se il permesso viene revocato
             e.printStackTrace()
@@ -80,7 +81,7 @@ class LocationActivity : AppCompatActivity(), LocationListener {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == locationPermissionCodeFINE || requestCode == locationPermissionCodeCOARSE ) { //devono avere entrambi i permessi
+        if (requestCode == locationPermissionCodeFINE || requestCode == locationPermissionCodeCOARSE) { //devono avere entrambi i permessi
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 requestLocationUpdates()
             } else {
