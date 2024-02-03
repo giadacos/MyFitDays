@@ -127,7 +127,7 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
             )
             if (magnitude > 22) { //valore che permette un conteggio reale più o meno accurato
                 stepCount++
-                stepCountTextView.text = "Steps taken: $stepCount"
+                stepCountTextView.text = "Passi compiuti: $stepCount"
                 // Salva il conteggio aggiornato in SharedPreferences
                 sharedPreferences.edit().putInt(STEPSKEY, stepCount).apply()
             }
