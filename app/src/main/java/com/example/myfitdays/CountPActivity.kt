@@ -88,7 +88,7 @@ class CountPActivity : AppCompatActivity(), SensorEventListener {
     @SuppressLint("SetTextI18n")
     private fun resetStepCount() {
         stepCount = 0
-        stepCountTextView.text = "Steps taken: $stepCount"
+        stepCountTextView.text = "Passi compiuti: $stepCount"
         sharedPreferences.edit().putInt(STEPSKEY, stepCount).apply()
 
         // Salva il giorno corrente per il controllo del nuovo giorno
